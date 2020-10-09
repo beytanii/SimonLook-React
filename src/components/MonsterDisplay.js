@@ -4,44 +4,50 @@ import { View, Text, StyleSheet, Modal, ImageBackground, TouchableOpacity, Image
 
 import ImageSlider from 'react-native-image-slider';
 
-
 class MonsterDisplay extends Component{
-    state = {
+    constructor(props) {
+        super(props);
+        this.state = {
         isModalVisible: true
+        }
     };
 
-    hideModal = () => {
-		this.setState({isModalVisible: false})
-	};
-
-    gameplay(position) {
-      console.log(position)
-      if (position === 0) {
-        this.hideModal
-      }
+    showModal = () => {
+        this.setState({
+          modalVisible: true
+        });
+        setTimeout(() => {
+          this.setState({
+            modalVisible: false
+          })
+          }, this.props.time);
     }
 
-    componentWillUnmount(){
-        this.hideModal
+    componentDidMount(){
+        this.showModal();
     }
   
     render() {
       return (
+        <View style={styles.container}>
             <Modal
                 animationType="slide"
-                transparent={true}
-                isVisible={this.state.isModalVisible}
-                >
+                transparent
+                visible={this.state.modalVisible}
+                onRequestClose={() => {
+                  console.log('Modal has been closed.');
+                }}>
                     <ImageSlider
                         autoPlayWithInterval={1000}
                         images={this.props.display}
                         style={styles.slideshow}
-                        // onPositionChanged={(position) => this.gameplay(position)} 
                     />
             </Modal>
-      );
+        </View>
+        );
     }
 }
+
 
 
 const styles = StyleSheet.create({
@@ -67,13 +73,13 @@ const styles = StyleSheet.create({
     },
     midContainer:{
       height:400
-  },
+    },
     scoreboard:{
         width: 300,
         height: 80,
         justifyContent: 'center',
         alignItems: "center",
     },
-})
+});
 
 export default MonsterDisplay;

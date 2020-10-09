@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { Component} from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, Image, Button, Modal } from 'react-native';
 
 import MonsterDisplay from '../components/MonsterDisplay';
 
 import Grid from 'react-native-grid-component';
+import ImageSlider from 'react-native-image-slider';
 
-var monsters =[
+
+const monsters =[
     require('../../assets/Monsters/monster1.png'),
     require('../../assets/Monsters/monster2.png'),
     require('../../assets/Monsters/monster3.png'),
@@ -14,18 +16,27 @@ var monsters =[
 ]
 
 var sample =[
-  require('../../assets/Monsters/monster1.png'),
-  require('../../assets/Monsters/monster4.png'),
-  require('../../assets/Monsters/monster1.png'),
-  require('../../assets/Monsters/monster2.png'),
-  require('../../assets/Monsters/monster3.png'),
-  require('../../assets/Monsters/monster1.png'),
-  require('../../assets/Monsters/monster1.png'),
-  require('../../assets/Monsters/monster4.png'),
-  require('../../assets/Monsters/monster3.png'),
+    require('../../assets/Monsters/monster2.png'),
+    require('../../assets/Monsters/monster3.png'),
+    require('../../assets/Monsters/monster1.png'),
+    require('../../assets/Monsters/monster1.png'),
+    require('../../assets/Monsters/monster4.png'),
+    require('../../assets/Monsters/monster2.png'),
+    require('../../assets/Monsters/monster1.png'),
+    require('../../assets/Monsters/monster4.png'),
 ]
 
+var monsterArr = []
+
+var answerArr = []
+
 class GameOperations extends Component{
+    addRandomMonster = () => {
+        // console.log('hello')
+        var x = Math.floor(Math.random()* 4);
+        monsterArr.push(monsters[x]);
+        console.log(monsterArr);
+    }
 
     _renderItem = (data, i) => (
         <TouchableOpacity style={[{ backgroundColor: '#2c3e50' }, styles.item]} onPress={()=> console.log(i)}>
@@ -37,7 +48,8 @@ class GameOperations extends Component{
     render(){
         return(
             <View style={styles.container}>
-                <MonsterDisplay display={monsters}/>
+
+                <MonsterDisplay display={monsterArr} time={(monsterArr.length * 1200)}/>
                 
                 <View style={styles.container}>
                 <View style={styles.midContainer} >
@@ -59,6 +71,9 @@ class GameOperations extends Component{
         );
     }
 }
+
+
+
 
 const styles = StyleSheet.create({
     container:{
@@ -97,3 +112,4 @@ export default GameOperations;
 // https://medium.com/@KPS250/creating-image-slider-with-flatlist-in-react-native-1815d3793d99
 // https://github.com/PaulBGD/react-native-image-slider
 // https://github.com/haqiqiw/react-native-slideshow/issues/4
+// https://reactnativeforyou.com/how-to-make-react-native-modal-close-automatically/
